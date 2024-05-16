@@ -1,0 +1,17 @@
+[alias]
+	credential-manager = credential-manager-core
+
+[credential]
+	helper = manager
+	credentialStore = secretservice
+	guiPrompt = false
+
+[pull]
+	ff = only
+
+[include]
+	# Load local configs.
+	#
+	# [!] Must be at the end of the file
+
+	path = ~/.gitconfig.local

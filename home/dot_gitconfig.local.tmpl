@@ -1,0 +1,13 @@
+[commit]
+    # Sign commits using GPG.
+    # https://help.github.com/articles/signing-commits-using-gpg/
+
+    gpgSign = true
+
+[gpg]
+    program = gpg
+
+[user]
+    name = {{ .personal.name }}
+    email = {{ .personal.email }}
+    signingKey = {{ template "get_gh_sign_key" . }}
