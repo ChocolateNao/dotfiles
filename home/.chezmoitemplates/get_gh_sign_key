@@ -1,0 +1,1 @@
+{{ output "sh" "-c" "gpg --list-secret-keys --keyid-format LONG 'Github Sign' | grep '^sec' | awk '{print $2}' | cut -d'/' -f2" }}

@@ -1,0 +1,17 @@
+{{ $email := promptStringOnce . "email" "Your email" -}}
+{{ $name := promptStringOnce . "name" "Your full name" -}}
+
+{{- $host_type_choices := list "desktop" "laptop" "server" -}}
+{{- $host_type := promptChoiceOnce . "host_type" "What type of host are you on" $host_type_choices -}}
+
+{{- $host_affiliation_choices := list "personal" "work" "other" -}}
+{{- $host_affiliation := promptChoiceOnce . "host_affiliation" "What type of host is this" $host_affiliation_choices -}}
+
+[data.personal]
+  email = {{ $email | quote }}
+  name = {{ $name | quote }}
+  website = "https://choconao.me"
+
+[data.host_info]
+  host_type = {{ $host_type | quote }}
+  host_affiliation = {{ $host_affiliation | quote }}

@@ -1,0 +1,8 @@
+[choconao]
+
+[default_programs]
+  editor = "code"
+  terminal = "gnome-terminal"
+  browser = "firefox"
+  video = "vlc"
+  colorterm = "truecolor"
