@@ -87,7 +87,7 @@ do_install() {
     done
 
     if [ -z "$package_list_final" ]; then
-        echo "Package(s) $package_list already installed, skipping..."
+        echo "Package(s) \"$package_list\" already installed, skipping..."
 
         # Now we are using playbook with "onchange" script
         # prompt_playbook
@@ -116,7 +116,7 @@ do_install() {
         esac
     fi
 
-    echo "Package(s) "$package_list" installed successfully"
+    echo "Package(s) \"$package_list\" installed successfully"
 
     # prompt_playbook
     exit 0
