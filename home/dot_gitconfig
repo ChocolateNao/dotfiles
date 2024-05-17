@@ -10,8 +10,5 @@
 	ff = only
 
 [include]
-	# Load local configs.
-	#
-	# [!] Must be at the end of the file
-
+	# Load local configs. Must be at the end of the file
 	path = ~/.gitconfig.local
