@@ -4,25 +4,29 @@ trap throw_error ERR
 
 OS="$(uname -s)"
 
+# Packages to install (space-separated)
+package_list="curl ansible"
+package_list_final="$package_list"
+
 throw_error() {
     echo 'An unexpected error occured. Exiting...'
     exit 1
 }
 
 install_on_fedora() {
-    sudo dnf install -y ansible
+    sudo dnf install -y $package_list_final
 }
 
 install_on_ubuntu() {
-    sudo apt-get update && sudo apt-get install -y ansible
+    sudo apt-get update && sudo apt-get install -y $package_list_final
 }
 
 install_on_mac() {
-    brew install ansible
+    brew install $package_list_final
 }
 
 install_on_arch() {
-    sudo pacman -Syu --noconfirm && sudo pacman -S ansible --noconfirm
+    sudo pacman -Syu --noconfirm && sudo pacman -S $package_list_final --noconfirm
 }
 
 command_exists() {
@@ -71,8 +75,19 @@ prompt_playbook() {
 }
 
 do_install() {
-    if command_exists ansible; then
-        echo "Ansible already installed"
+    for cmd in $package_list; do
+        if command_exists "$cmd"; then
+            # Remove the package name from the list
+            package_list_final=${package_list_final//$cmd/}
+            # Remove spaces
+            package_list_final=$(echo "$package_list_final" | xargs)
+
+            echo "$cmd already installed, skipping..."
+        fi
+    done
+
+    if [ -z "$package_list_final" ]; then
+        echo "Package(s) $package_list already installed, skipping..."
 
         # Now we are using playbook with "onchange" script
         # prompt_playbook
@@ -101,8 +116,10 @@ do_install() {
         esac
     fi
 
-    echo "Ansible installation complete"
+    echo "Package(s) "$package_list" installed successfully"
+
     # prompt_playbook
+    exit 0
 }
 
 do_install
