@@ -15,3 +15,10 @@
 [data.host_info]
   host_type = {{ $host_type | quote }}
   host_affiliation = {{ $host_affiliation | quote }}
+
+# exclude scripts from the output of "chezmoi diff" and "chezmoi status"
+[diff]
+  exclude = ["scripts"]
+
+[status]
+  exclude = ["scripts"]
