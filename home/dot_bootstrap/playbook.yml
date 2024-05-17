@@ -1,0 +1,24 @@
+---
+# Playbook to install curl using pacman
+- name: Install curl on Arch Linux
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Ensure system is up-to-date
+      pacman:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Install curl
+      pacman:
+        name: curl
+        state: present
+
+    - name: Verify curl installation
+      command: curl --version
+      register: curl_version
+      changed_when: false
+
+    - name: Display curl version
+      debug:
+        msg: "Installed curl version: {{ curl_version.stdout }}"
