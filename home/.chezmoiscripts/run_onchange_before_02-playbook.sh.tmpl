@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+if command -v ansible-playbook &> /dev/null; then
+    ansible-playbook {{ joinPath .chezmoi.sourceDir "dot_bootstrap/playbook.yml" | quote }} --ask-become-pass
+fi

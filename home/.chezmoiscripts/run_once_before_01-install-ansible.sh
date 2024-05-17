@@ -55,7 +55,7 @@ get_distribution() {
 }
 
 run_playbook() {
-    ansible-playbook ~/.bootstrap/setup.yml --ask-become-pass
+    ansible-playbook $(chezmoi source-path)/dot_bootstrap/playbook.yml --ask-become-pass
 }
 
 prompt_playbook() {
@@ -73,7 +73,9 @@ prompt_playbook() {
 do_install() {
     if command_exists ansible; then
         echo "Ansible already installed"
-        prompt_playbook
+
+        # Now we are using playbook with "onchange" script
+        # prompt_playbook
         exit 0
     fi
 
@@ -100,7 +102,7 @@ do_install() {
     fi
 
     echo "Ansible installation complete"
-    prompt_playbook
+    # prompt_playbook
 }
 
 do_install
