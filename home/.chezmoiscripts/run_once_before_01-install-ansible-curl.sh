@@ -5,11 +5,12 @@ trap throw_error ERR
 OS="$(uname -s)"
 
 # Packages to install (space-separated)
-package_list="curl ansible"
-package_list_final="$package_list"
+package_list="ansible git ansible-lint"
+
+source $(chezmoi source-path)/helpers/logger.sh
 
 throw_error() {
-    echo 'An unexpected error occured. Exiting...'
+    log_error 'An unexpected error occured. Exiting...'
     exit 1
 }
 
@@ -66,28 +67,27 @@ prompt_playbook() {
     read -p "Do you want to run ansible playbook to install dependencies? (yes/no) " response
 
     if [[ "$response" =~ ^[Yy] ]]; then
-        echo "Running ansible playbook..."
+        log_info "Running ansible playbook..."
         run_playbook
     else
-        echo "Ansible playbook was not executed. Exiting..."
+        log_error "Ansible playbook was not executed. Exiting..."
         exit 0
     fi
 }
+
+package_list_final="$package_list"
 
 do_install() {
     for cmd in $package_list; do
         if command_exists "$cmd"; then
             # Remove the package name from the list
-            package_list_final=${package_list_final//$cmd/}
-            # Remove spaces
-            package_list_final=$(echo "$package_list_final" | xargs)
-
-            echo "$cmd already installed, skipping..."
+            package_list_final=$(echo "$package_list_final" | sed "s/\b$cmd\b//" | xargs)
+            log_warn "$cmd already installed, skipping..."
         fi
     done
 
     if [ -z "$package_list_final" ]; then
-        echo "Package(s) \"$package_list\" already installed, skipping..."
+        log_info "Package(s) \"$package_list\" already installed, skipping..."
 
         # Now we are using playbook with "onchange" script
         # prompt_playbook
@@ -110,13 +110,13 @@ do_install() {
                 install_on_ubuntu
                 ;;
             *)
-                echo "Unsupported distribution: ${dist}"
+                log_error "Unsupported distribution: ${dist}"
                 exit 1
                 ;;
         esac
     fi
 
-    echo "Package(s) \"$package_list\" installed successfully"
+    log_success "Package(s) \"$package_list\" installed successfully"
 
     # prompt_playbook
     exit 0

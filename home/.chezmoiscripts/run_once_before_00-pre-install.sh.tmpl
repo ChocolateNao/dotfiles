@@ -2,5 +2,7 @@
 
 mgr="{{- template "pkg_manager" . -}}"
 
-echo "Run pre-install script"
-echo "Package manager detected: ${mgr}"
+source $(chezmoi source-path)/helpers/logger.sh
+
+log_info "Run pre-install script"
+log_success "Package manager detected: ${mgr}"
