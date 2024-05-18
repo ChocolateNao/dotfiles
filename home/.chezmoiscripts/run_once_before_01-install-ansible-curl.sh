@@ -60,7 +60,7 @@ get_distribution() {
 }
 
 run_playbook() {
-    ansible-playbook $(chezmoi source-path)/dot_bootstrap/playbook.yml --ask-become-pass
+    ansible-playbook -i $(chezmoi source-path)/dot_bootstrap/inventory.ini $(chezmoi source-path)/dot_bootstrap/playbook.yml --ask-become-pass
 }
 
 prompt_playbook() {

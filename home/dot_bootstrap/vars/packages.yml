@@ -1,0 +1,49 @@
+---
+pkgmgr_base_package_list:
+  - git
+  - neofetch
+  - flatpak
+  - wine-staging
+  - visual-studio-code-bin
+  - virtualbox
+  - python
+  - pulseaudio
+  - protobuf
+  - pnpm
+  - perl
+  - ffmpeg
+  - firefox
+  - vlc
+  - obs-studio
+  - shutter
+  - telegram-desktop
+  - pavucontrol
+
+# Only if .host_affiliation = personal
+pkgmgr_extended_package_list:
+  - vulkan-amdgpu-pro
+  - gnome-shell
+  - freeoffice
+  - blender
+  - inkscape
+  - discord
+  - lutris
+  - wine-staging
+  - winetricks
+
+flatpak_base_package_list:
+  - com.bitwarden.desktop
+  - com.getpostman.Postman
+  - com.slack.Slack
+  - io.dbeaver.DBeaverCommunity
+  - org.filezillaproject.Filezilla
+  - io.github.Figma_Linux.figma_linux
+  - us.zoom.Zoom
+  - com.jgraph.drawio.desktop
+
+# Only if .host_affiliation = personal
+flatpak_extended_package_list:
+  - com.valvesoftware.Steam
+  - com.spotify.Client
+  - ru.linux_gaming.PortProton
+  - com.boxy_svg.BoxySVG

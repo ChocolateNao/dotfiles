@@ -5,5 +5,5 @@ source $(chezmoi source-path)/helpers/logger.sh
 log_info "Running ansible playbook"
 
 if command -v ansible-playbook &> /dev/null; then
-    ansible-playbook {{ joinPath .chezmoi.sourceDir "dot_bootstrap/playbook.yml" | quote }} --ask-become-pass
+    ansible-playbook -i {{ joinPath .chezmoi.sourceDir "dot_bootstrap/inventory.ini" | quote }} {{ joinPath .chezmoi.sourceDir "dot_bootstrap/playbook.yml" | quote }} --ask-become-pass
 fi

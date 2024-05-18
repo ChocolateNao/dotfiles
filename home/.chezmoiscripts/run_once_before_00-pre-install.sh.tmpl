@@ -1,8 +1,25 @@
 #!/usr/bin/env bash
 
+set -e
 mgr="{{- template "pkg_manager" . -}}"
 
 source $(chezmoi source-path)/helpers/logger.sh
 
 log_info "Run pre-install script"
 log_success "Package manager detected: ${mgr}"
+
+generate_ansible_template() {
+    local TEMPLATE_PATH="$(chezmoi source-path)/dot_bootstrap/playbook_t.yml.tmpl"
+    local OUTPUT_PATH="$(chezmoi source-path)/dot_bootstrap/playbook.yml"
+
+    if [ -f $TEMPLATE_PATH ]; then
+        log_info "Preparing ansible playbook"
+
+        chezmoi execute-template < "$TEMPLATE_PATH" > "$OUTPUT_PATH"
+    else
+        log_error "Playbook template not found"
+        exit 1
+    fi
+}
+
+generate_ansible_template
