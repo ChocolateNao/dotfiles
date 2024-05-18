@@ -2,6 +2,6 @@
 
 # Here we can delete unnecessary packages or files if we don't need it anymore e.g ansible
 
-source $(chezmoi source-path)/helpers/logger.sh
+source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
 log_info "Run post-install script"

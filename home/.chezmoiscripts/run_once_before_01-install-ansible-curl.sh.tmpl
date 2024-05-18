@@ -7,7 +7,7 @@ OS="$(uname -s)"
 # Packages to install (space-separated)
 package_list="ansible git ansible-lint"
 
-source $(chezmoi source-path)/helpers/logger.sh
+source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
 throw_error() {
     log_error 'An unexpected error occured. Exiting...'
@@ -60,7 +60,7 @@ get_distribution() {
 }
 
 run_playbook() {
-    ansible-playbook -i $(chezmoi source-path)/dot_bootstrap/inventory.ini $(chezmoi source-path)/dot_bootstrap/playbook.yml --ask-become-pass
+    ansible-playbook -i {{ joinPath .chezmoi.sourceDir "dot_bootstrap/inventory.ini" | quote }} {{ joinPath .chezmoi.sourceDir "dot_bootstrap/playbook.yml" | quote }} --ask-become-pass
 }
 
 prompt_playbook() {

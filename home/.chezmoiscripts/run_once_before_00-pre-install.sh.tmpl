@@ -9,8 +9,8 @@ log_info "Run pre-install script"
 log_success "Package manager detected: ${mgr}"
 
 generate_ansible_template() {
-    local TEMPLATE_PATH="$(chezmoi source-path)/dot_bootstrap/playbook_t.yml.tmpl"
-    local OUTPUT_PATH="$(chezmoi source-path)/dot_bootstrap/playbook.yml"
+    local TEMPLATE_PATH={{ joinPath .chezmoi.sourceDir "/dot_bootstrap/playbook_t.yml.tmpl" | quote }}
+    local OUTPUT_PATH={{ joinPath .chezmoi.sourceDir "/dot_bootstrap/playbook.yml" | quote }}
 
     if [ -f $TEMPLATE_PATH ]; then
         log_info "Preparing ansible playbook"

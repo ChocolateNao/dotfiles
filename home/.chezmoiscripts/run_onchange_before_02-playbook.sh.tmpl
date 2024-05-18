@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(chezmoi source-path)/helpers/logger.sh
+source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
 log_info "Running ansible playbook"
 
