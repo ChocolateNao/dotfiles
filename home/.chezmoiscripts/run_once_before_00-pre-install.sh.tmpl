@@ -15,7 +15,8 @@ generate_ansible_playbook() {
     if [ -f $TEMPLATE_PATH ]; then
         log_info "Preparing ansible playbook"
 
-        chezmoi execute-template < "$TEMPLATE_PATH" > "$OUTPUT_PATH"
+        # On a fresh install chezmoi is saved in "/home/$USER/bin/chezmoi"
+        {{ .chezmoi.executable }} execute-template < "$TEMPLATE_PATH" > "$OUTPUT_PATH"
     else
         log_error "Playbook template not found"
         exit 1
