@@ -3,12 +3,12 @@
 set -e
 mgr="{{- template "pkg_manager" . -}}"
 
-source $(chezmoi source-path)/helpers/logger.sh
+source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
 log_info "Run pre-install script"
 log_success "Package manager detected: ${mgr}"
 
-generate_ansible_template() {
+generate_ansible_playbook() {
     local TEMPLATE_PATH={{ joinPath .chezmoi.sourceDir "/dot_bootstrap/playbook_t.yml.tmpl" | quote }}
     local OUTPUT_PATH={{ joinPath .chezmoi.sourceDir "/dot_bootstrap/playbook.yml" | quote }}
 
@@ -22,4 +22,4 @@ generate_ansible_template() {
     fi
 }
 
-generate_ansible_template
+generate_ansible_playbook
