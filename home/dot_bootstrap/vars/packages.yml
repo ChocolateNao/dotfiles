@@ -18,6 +18,13 @@ pkgmgr_base_package_list:
   - shutter
   - telegram-desktop
   - pavucontrol
+  - lsof
+  - gpg2
+  - pass
+  - git-credential-manager
+  # - docker-credential-pass
+  - wireguard-tools
+  - jre-openjdk
 
 # Only if .host_affiliation = personal
 pkgmgr_extended_package_list:
@@ -30,6 +37,7 @@ pkgmgr_extended_package_list:
   - lutris
   - wine-staging
   - winetricks
+  - transmission-qt
 
 flatpak_base_package_list:
   - com.bitwarden.desktop
