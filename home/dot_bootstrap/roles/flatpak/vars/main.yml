@@ -1,0 +1,16 @@
+flatpak_package_list:
+  - com.bitwarden.desktop
+  - com.getpostman.Postman
+  - com.slack.Slack
+  - io.dbeaver.DBeaverCommunity
+  - org.filezillaproject.Filezilla
+  - io.github.Figma_Linux.figma_linux
+  - us.zoom.Zoom
+  - com.jgraph.drawio.desktop
+
+# Only if .host_affiliation = personal
+flatpak_package_list_personal:
+  - com.valvesoftware.Steam
+  - com.spotify.Client
+  - ru.linux_gaming.PortProton
+  - com.boxy_svg.BoxySVG

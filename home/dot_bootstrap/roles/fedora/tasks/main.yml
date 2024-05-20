@@ -1,0 +1,38 @@
+- name: Update dnf cache
+  ansible.builtin.dnf:
+    update_cache: yes
+
+- name: Upgrade all Fedora packages
+  ansible.builtin.dnf:
+    name: "*"
+    state: present
+
+- name: Install base packages
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base }}"
+  ignore_errors: true
+
+- name: Install base packages personal
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base_personal }}"
+  when: host_affiliation == "personal"
+  ignore_errors: true
+
+- name: Install Fedora-specific packages
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ fedora_package_list }}"
+  ignore_errors: true
+
+- name: Install Fedora-specific personal packages
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ fedora_package_list_personal }}"
+  when: host_affiliation == "personal"
+  ignore_errors: true

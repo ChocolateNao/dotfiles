@@ -1,0 +1,24 @@
+- name: Get current remote user
+  ansible.builtin.set_fact:
+    remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+
+- name: Read chezmoi config
+  ansible.builtin.fetch:
+    src: /home/{{ remote_regular_user }}/.config/chezmoi/chezmoi.toml
+    dest: /tmp/app_config.toml
+    flat: true
+
+- name: Read and parse chezmoi TOML configuration file
+  ansible.builtin.shell: cat "/home/{{ remote_regular_user }}/.config/chezmoi/chezmoi.toml"
+  register: chezmoi_config_content
+
+- name: Convert chezmoi configuration to dictionary
+  ansible.builtin.set_fact:
+    chezmoi_config: "{{ chezmoi_config_content.stdout | from_toml }}"
+
+- name: Set chezmoi facts
+  ansible.builtin.set_fact:
+    host_type: "{{ chezmoi_config['data']['host_info']['host_type'] }}"
+    host_affiliation: "{{ chezmoi_config['data']['host_info']['host_affiliation'] }}"
+    user_email: "{{ chezmoi_config['data']['personal']['email'] }}"
+    user_name: "{{ chezmoi_config['data']['personal']['name'] }}"

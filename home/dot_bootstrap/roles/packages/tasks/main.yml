@@ -1,0 +1,28 @@
+- name: Include Alpine role
+  ansible.builtin.include_role:
+    name: alpine
+  when: ansible_os_family == "Alpine"
+
+- name: Include Arch role
+  ansible.builtin.include_role:
+    name: arch
+  when: ansible_os_family == "Archlinux"
+
+- name: Include Darwin role
+  ansible.builtin.include_role:
+    name: darwin
+  when: ansible_os_family == "Darwin"
+
+- name: Include Debian role
+  ansible.builtin.include_role:
+    name: debian
+  when: ansible_os_family == "Debian"
+
+- name: Include Fedora role
+  ansible.builtin.include_role:
+    name: fedora
+  when: ansible_facts['distribution'] == "Fedora"
+
+- name: Include Flatpak role
+  ansible.builtin.include_role:
+    name: flatpak

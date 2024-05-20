@@ -1,0 +1,39 @@
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Upgrade all apt packages
+  ansible.builtin.apt:
+    upgrade: true
+
+- name: Install base packages
+  ansible.builtin.apt:
+    force_apt_get: true
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base }}"
+  ignore_errors: true
+
+- name: Install base packages personal
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base_personal }}"
+  when: host_affiliation == "personal"
+  ignore_errors: true
+
+- name: Install Debian-specific packages
+  ansible.builtin.apt:
+    force_apt_get: true
+    name: "{{ item }}"
+    state: present
+  loop: "{{ debian_package_list }}"
+  ignore_errors: true
+
+- name: Install Debian-specific personal packages
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ debian_package_list_personal }}"
+  when: host_affiliation == "personal"
+  ignore_errors: true

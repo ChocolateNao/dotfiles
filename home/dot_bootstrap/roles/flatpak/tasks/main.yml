@@ -1,0 +1,12 @@
+- name: Install Flatpak packages
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ flatpak_package_list }}"
+
+- name: Install Flatpak personal packages
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ flatpak_package_list_personal }}"
+  when: host_affiliation == "personal"

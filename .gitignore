@@ -1,4 +1,1 @@
 .vscode
-/home/dot_bootstrap/*_t.*
-/home/dot_bootstrap/playbook.yml
-!/home/dot_bootstrap/*.tmpl

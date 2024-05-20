@@ -1,0 +1,8 @@
+---
+arch_package_list:
+  - visual-studio-code-bin
+  - wine-staging
+
+# Only if .host_affiliation = personal
+arch_package_list_personal:
+  - youtube-music

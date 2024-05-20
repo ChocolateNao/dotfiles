@@ -1,0 +1,36 @@
+---
+- name: Install packages on a machine
+  hosts: all
+  become: true
+  gather_facts: true
+  roles:
+    - chezmoi_vars
+    - packages
+  vars_files:
+    - ./vars/main.yml
+  tasks:
+
+# Platform independent section
+
+#     - name: Install nvm
+#       ansible.builtin.shell: >
+#         set -o pipefail
+#         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+#       args:
+#         executable: /bin/bash
+#         chdir: "{{ ansible_env.HOME }}"
+#         creates: "{{ ansible_env.HOME }}/.nvm/nvm.sh"
+
+#     - name: Install Node.js
+#       ansible.builtin.shell: '. {{ ansible_env.HOME }}/.nvm/nvm.sh && nvm install --lts'
+#       args:
+#         creates: "{{ ansible_env.HOME }}/.nvm/versions/node"
+#         chdir: "{{ ansible_env.HOME }}"
+#         executable: /bin/bash
+
+# # Settings section
+
+#     - name: Change shell to zsh
+#       ansible.builtin.user:
+#         name: "{{ remote_regular_user }}"
+#         shell: /usr/bin/zsh

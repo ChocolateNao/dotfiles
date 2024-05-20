@@ -1,0 +1,31 @@
+packages_list_base:
+  - git
+  - git-credential-manager
+  - neofetch
+  - flatpak
+  - virtualbox
+  - python
+  - pulseaudio
+  - protobuf
+  - perl
+  - ffmpeg
+  - firefox
+  - vlc
+  - obs-studio
+  - shutter
+  - telegram-desktop
+  - pavucontrol
+  - lsof
+  - pass
+  - docker-credential-pass
+  - wireguard-tools
+
+# Only if .host_affiliation = personal
+packages_list_base_personal:
+  - freeoffice
+  - blender
+  - inkscape
+  - discord
+  - lutris
+  - winetricks
+  - transmission-qt

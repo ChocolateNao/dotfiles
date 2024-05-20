@@ -1,0 +1,36 @@
+- name: Update homebrew
+  community.general.homebrew:
+    update_homebrew: true
+
+- name: Upgrade all homebrew packages
+  community.general.homebrew:
+    upgrade_all: true
+
+# - name: Install base packages
+#   community.general.homebrew:
+#     name: "{{ item }}"
+#     state: present
+#   loop: "{{ packages_list_base }}"
+
+# - name: Install base packages personal
+#   community.general.homebrew:
+#     name: "{{ item }}"
+#     state: present
+#   loop: "{{ packages_list_base_personal }}"
+#   when: host_affiliation == "personal"
+#   ignore_errors: true
+
+- name: Install Darwin-specific packages
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ darwin_package_list }}"
+  ignore_errors: true
+
+- name: Install Darwin-specific personal packages
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ darwin_package_list_personal }}"
+  when: host_affiliation == "personal"
+  ignore_errors: true

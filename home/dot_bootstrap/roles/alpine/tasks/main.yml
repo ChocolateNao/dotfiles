@@ -1,0 +1,37 @@
+- name: Update apk cache
+  community.general.apk:
+    update_cache: true
+
+- name: Upgrade all apk packages
+  community.general.apk:
+    upgrade: true
+
+- name: Install base packages
+  community.general.apk:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base }}"
+  ignore_errors: true
+
+- name: Install base packages personal
+  community.general.apk:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base_personal }}"
+  when: host_affiliation == "personal"
+  ignore_errors: true
+
+- name: Install Alpine-specific packages
+  community.general.apk:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ alpine_package_list }}"
+  ignore_errors: true
+
+- name: Install Alpine-specific personal packages
+  community.general.apk:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ alpine_package_list_personal }}"
+  ignore_errors: true
+  when: host_affiliation == "personal"

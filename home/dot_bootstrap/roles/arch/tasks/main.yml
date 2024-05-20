@@ -1,0 +1,34 @@
+- name: Update pacman cache
+  community.general.pacman:
+    update_cache: true
+
+- name: Upgrade all pacman packages
+  community.general.pacman:
+    upgrade: true
+
+- name: Install base packages
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base }}"
+
+- name: Install base packages personal
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages_list_base_personal }}"
+  when: host_affiliation == "personal"
+  ignore_errors: true
+
+- name: Install Arch-specific packages
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ arch_package_list }}"
+
+- name: Install Arch-specific personal packages
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ arch_package_list_personal }}"
+  when: host_affiliation == "personal"

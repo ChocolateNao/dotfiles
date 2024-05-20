@@ -1,0 +1,3 @@
+---
+apt_package_list:
+  - wine
