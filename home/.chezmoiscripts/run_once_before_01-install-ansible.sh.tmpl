@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-trap throw_error ERR
+set -e
+set -o pipefail
 
 OS="$(uname -s)"
 
@@ -8,11 +9,6 @@ OS="$(uname -s)"
 package_list="ansible git ansible-lint"
 
 source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
-
-throw_error() {
-    log_error 'An unexpected error occured. Exiting...'
-    exit 1
-}
 
 install_on_fedora() {
     sudo dnf install -y $package_list_final

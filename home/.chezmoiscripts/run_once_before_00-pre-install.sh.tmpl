@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 set -e
-mgr="{{- template "pkg_manager" . -}}"
+
+PACKAGE_MANAGER="{{- template "pkg_manager" . -}}"
 
 source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
 log_info "Run pre-install script"
-log_success "Package manager detected: ${mgr}"
+log_success "Package manager detected: ${PACKAGE_MANAGER}"
 
 generate_ansible_playbook() {
     local TEMPLATE_PATH={{ joinPath .chezmoi.sourceDir "/dot_bootstrap/playbook_t.yml.tmpl" | quote }}
@@ -19,7 +20,7 @@ generate_ansible_playbook() {
         {{ .chezmoi.executable }} execute-template < "$TEMPLATE_PATH" > "$OUTPUT_PATH"
     else
         log_error "Playbook template not found"
-        exit 1
+        exit 0
     fi
 }
 
