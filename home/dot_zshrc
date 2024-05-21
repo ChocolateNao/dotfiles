@@ -104,9 +104,9 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='nano'
+  export EDITOR="nano"
 else
-  export EDITOR='code'
+  export EDITOR="code"
 fi
 
 # Compilation flags
