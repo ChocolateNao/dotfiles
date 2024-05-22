@@ -2,6 +2,8 @@
 
 source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
+PACKAGE_MANAGER="{{- template "pkg_manager" . -}}"
+
 run_playbook() {
     log_info "Running ansible playbook"
     if command -v ansible-playbook &> /dev/null; then
@@ -9,9 +11,9 @@ run_playbook() {
     fi
 }
 
-if [ $PACKAGE_MANAGER != "unknown" ]; then
-    run_playbook
+if [ $PACKAGE_MANAGER = "unknown" ]; then
+    log_error "Current system's package manager is unsupported. Unable to install packages via ansible. Skipping..."
 else
-    log_error "Current system's package manager is unsupported, therefore unsble to install packages. Skipping..."
+    run_playbook
 fi
 
