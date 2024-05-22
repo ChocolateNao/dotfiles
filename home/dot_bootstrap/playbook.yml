@@ -6,8 +6,8 @@
   roles:
     - chezmoi_vars
     - packages
-  vars_files:
-    - ./vars/main.yml
+  # vars_files:
+  #   - ./vars/main.yml
   tasks:
 
 # Platform independent section

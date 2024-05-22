@@ -5,6 +5,7 @@
 - name: Read chezmoi configuration file
   ansible.builtin.command: cat "/home/{{ remote_regular_user }}/.config/chezmoi/chezmoi.toml"
   register: chezmoi_config_content
+  changed_when: chezmoi_config_content.rc == 0
 
 - name: Convert chezmoi configuration to dictionary
   ansible.builtin.set_fact:

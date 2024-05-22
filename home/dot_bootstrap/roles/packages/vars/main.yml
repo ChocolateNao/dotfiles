@@ -1,6 +1,5 @@
 packages_list_base:
   - git
-  - git-credential-manager
   - neofetch
   - flatpak
   - virtualbox
