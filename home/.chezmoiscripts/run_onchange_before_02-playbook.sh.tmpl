@@ -2,8 +2,16 @@
 
 source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
-log_info "Running ansible playbook"
+run_playbook() {
+    log_info "Running ansible playbook"
+    if command -v ansible-playbook &> /dev/null; then
+        ansible-playbook -i {{ joinPath .chezmoi.sourceDir "dot_bootstrap/inventory.ini" | quote }} {{ joinPath .chezmoi.sourceDir "dot_bootstrap/playbook.yml" | quote }} --ask-become-pass
+    fi
+}
 
-if command -v ansible-playbook &> /dev/null; then
-    ansible-playbook -i {{ joinPath .chezmoi.sourceDir "dot_bootstrap/inventory.ini" | quote }} {{ joinPath .chezmoi.sourceDir "dot_bootstrap/playbook.yml" | quote }} --ask-become-pass
+if [ $PACKAGE_MANAGER != "unknown" ]; then
+    run_playbook
+else
+    log_error "Current system's package manager is unsupported, therefore unsble to install packages. Skipping..."
 fi
+

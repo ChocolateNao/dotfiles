@@ -38,6 +38,10 @@ is_darwin() {
 	esac
 }
 
+install_homebrew() {
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+}
+
 is_linux() {
     case "${OS}" in
     *Linux* ) true ;;
@@ -91,7 +95,14 @@ do_install() {
     fi
 
     if is_darwin; then
+        if ! command_exists "brew"; then
+            log_info "Installing homebrew"
+
+            install_homebrew
+        fi
+
         install_on_mac
+
     elif is_linux; then
         dist=$(get_distribution)
 

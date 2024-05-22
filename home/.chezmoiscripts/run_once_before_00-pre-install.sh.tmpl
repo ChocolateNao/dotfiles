@@ -2,12 +2,17 @@
 
 set -e
 
-PACKAGE_MANAGER="{{- template "pkg_manager" . -}}"
-
 source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
 log_info "Run pre-install script"
+
+export PACKAGE_MANAGER="{{- template "pkg_manager" . -}}"
+
 log_success "Package manager detected: ${PACKAGE_MANAGER}"
+
+if [ $PACKAGE_MANAGER == "unknown" ]; then
+    prompt_proceed_with_unsupported_os
+fi
 
 generate_ansible_playbook() {
     local TEMPLATE_PATH={{ joinPath .chezmoi.sourceDir "/dot_bootstrap/playbook_t.yml.tmpl" | quote }}
@@ -24,4 +29,16 @@ generate_ansible_playbook() {
     fi
 }
 
-generate_ansible_playbook
+prompt_proceed_with_unsupported_os() {
+    read -p "Unsupported OS. Packages will not be installed (dotfiles only).\nDo you wish to proceed with the installation? (yes/no) " response
+
+    if [[ "$response" =~ ^[Yy] ]]; then
+        log_info "Proceeding with the installation..."
+    else
+        log_error "Installation aborted. Exiting..."
+        exit 0
+    fi
+}
+
+# Deprecated as we are not using templates in playbooks anymore
+# generate_ansible_playbook

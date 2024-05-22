@@ -8,7 +8,7 @@
   {{- else if eq .chezmoi.osRelease.id "fedora" -}}
     dnf
   {{- else if eq .chezmoi.osRelease.id "centos" -}}
-    yum
+    unknown /* yum */
   {{- else if eq .chezmoi.osRelease.id "alpine" -}}
     apk
   {{- else -}}
