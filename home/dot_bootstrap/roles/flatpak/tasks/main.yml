@@ -1,3 +1,8 @@
+- name: Upgrade Flatpaks
+  ansible.builtin.command: flatpak update --noninteractive
+  register: flatpak_update_output
+  changed_when: "'app/' in flatpak_update_output.stdout"
+
 - name: Install Flatpak packages
   community.general.flatpak:
     name: "{{ item }}"

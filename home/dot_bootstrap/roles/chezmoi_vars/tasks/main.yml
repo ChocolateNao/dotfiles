@@ -2,14 +2,8 @@
   ansible.builtin.set_fact:
     remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
 
-- name: Read chezmoi config
-  ansible.builtin.fetch:
-    src: /home/{{ remote_regular_user }}/.config/chezmoi/chezmoi.toml
-    dest: /tmp/app_config.toml
-    flat: true
-
-- name: Read and parse chezmoi TOML configuration file
-  ansible.builtin.shell: cat "/home/{{ remote_regular_user }}/.config/chezmoi/chezmoi.toml"
+- name: Read chezmoi configuration file
+  ansible.builtin.command: cat "/home/{{ remote_regular_user }}/.config/chezmoi/chezmoi.toml"
   register: chezmoi_config_content
 
 - name: Convert chezmoi configuration to dictionary
