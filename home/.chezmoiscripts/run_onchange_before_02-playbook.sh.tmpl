@@ -23,7 +23,7 @@ install_pip_deps() {
     fi
 
     log_info "Installing toml package..."
-    python3 -m pip3 install toml
+    python3 -m pip install toml
 
     if [ $? -eq 0 ]; then
         log_success "toml package installed successfully"
