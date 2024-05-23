@@ -3,9 +3,8 @@ packages_list_base:
   - neofetch
   - flatpak
   - virtualbox
-  - python
+  - python3
   - pulseaudio
-  - protobuf
   - perl
   - ffmpeg
   - firefox
@@ -16,12 +15,10 @@ packages_list_base:
   - pavucontrol
   - lsof
   - pass
-  - docker-credential-pass
   - wireguard-tools
 
 # Only if .host_affiliation = personal
 packages_list_base_personal:
-  - freeoffice
   - blender
   - inkscape
   - discord

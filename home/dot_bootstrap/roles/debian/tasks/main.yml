@@ -4,7 +4,7 @@
 
 - name: Upgrade all apt packages
   ansible.builtin.apt:
-    upgrade: true
+    upgrade: "safe"
 
 - name: Install base packages
   ansible.builtin.apt:
