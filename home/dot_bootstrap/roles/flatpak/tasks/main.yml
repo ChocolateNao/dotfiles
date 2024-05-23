@@ -1,9 +1,7 @@
-- name: Add flathub repo
-  community.general.flatpak_remote:
-    name: flathub
-    state: present
-    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: user
+- name: Add Flathub repo
+  ansible.builtin.command: flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  register: flathub_installation
+  changed_when: flathub_installation.rc == 0
 
 - name: Upgrade Flatpaks
   ansible.builtin.command: flatpak update --noninteractive
@@ -14,13 +12,12 @@
   community.general.flatpak:
     name: "{{ item }}"
     state: present
-    method: user
   loop: "{{ flatpak_package_list }}"
 
 - name: Install Flatpak personal packages
   community.general.flatpak:
     name: "{{ item }}"
     state: present
-    method: user
+    method: system
   loop: "{{ flatpak_package_list_personal }}"
   when: host_affiliation == "personal"

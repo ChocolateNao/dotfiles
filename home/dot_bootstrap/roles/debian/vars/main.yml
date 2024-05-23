@@ -1,3 +1,2 @@
----
-apt_package_list:
+debian_package_list:
   - wine

@@ -1,6 +1,6 @@
 - name: Update dnf cache
   ansible.builtin.dnf:
-    update_cache: yes
+    update_cache: true
 
 - name: Upgrade all Fedora packages
   ansible.builtin.dnf:
