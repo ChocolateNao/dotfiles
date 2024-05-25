@@ -12,6 +12,7 @@
     name: "{{ item }}"
     state: present
   loop: "{{ packages_list_base }}"
+  ignore_errors: true
 
 - name: Install base packages personal
   community.general.pacman:
@@ -26,6 +27,7 @@
     name: "{{ item }}"
     state: present
   loop: "{{ arch_package_list }}"
+  ignore_errors: true
 
 - name: Install Arch-specific personal packages
   community.general.pacman:
@@ -33,3 +35,4 @@
     state: present
   loop: "{{ arch_package_list_personal }}"
   when: host_affiliation == "personal"
+  ignore_errors: true
