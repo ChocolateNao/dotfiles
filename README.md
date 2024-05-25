@@ -4,6 +4,21 @@
 
 Managed with [chezmoi](https://www.chezmoi.io/) and [ansible](https://www.ansible.com/).
 
+## Features
+
+- [x] Various dotfiles listed in [/home](https://github.com/ChocolateNao/dotfiles/tree/master/home) directory
+- [x] __zsh__ as default shell with __ohmyz.sh__ and the following plugins:
+  - zsh-autosuggestions
+  - zsh-syntax-highlighting
+  - zsh-history-substring-search
+- [x] Package installation via the built-in package manager (for supported platforms). You can find the base list [here](https://github.com/ChocolateNao/dotfiles/blob/master/home/dot_bootstrap/roles/packages/vars/main.yml)
+- [x] __Python3__ with __pip__ globally
+- [x] __Node.js__ LTS via __nvm__
+- [x] Fonts:
+  - JetBrains Mono
+  - Fira Codee
+  - MesloLGS NF
+
 ## Supported platforms
 
 > [!IMPORTANT]
@@ -11,19 +26,19 @@ Managed with [chezmoi](https://www.chezmoi.io/) and [ansible](https://www.ansibl
 
 This repo supports package installation via ansible for the following operating systems and distributions.
 
-_If you're willing to help testing unsupported things out - please do. It would be awesome!_
+_If you're willing to help testing unsupported things out - please do and let me know. It would be awesome!_
 
 - [x] Linux
   - [x] Ubuntu
   - [x] Debian
-  - [ ] Fedora (not tested)
-  - [ ] Alpine (not tested)
+  - [ ] Fedora _(Not tested)_
+  - [ ] Alpine _(Not tested)_
   - [x] Arch
   - [x] Manjaro
 <!-- - [ ] Windows (via chocolatey) (not tested) -->
-- [ ] macOS (not tested)
+- [ ] macOS _(Not tested)_
 
-If the command is executed on unsupported system the user will be prompted to skip the package-installation step and proceed to only install the dotfiles.
+If the command is executed on unsupported system the user will be prompted to skip the package-installation step and proceed to install dotfiles only.
 
 ## Installation
 
@@ -38,6 +53,9 @@ In case of a non-fresh install, usage of `--verbose` and `--dry-run` flags is hi
 ```bash
 # this installs chezmoi and initializes this repository
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init ChocolateNao
+
+# If not installed globally, the exec might be different
+# /home/$USER/bin/chezmoi
 
 # look what will be changed
 chezmoi apply --verbose --dry-run
@@ -67,3 +85,12 @@ chezmoi apply --verbose
 ## Personal use
 
 The ansible playbook contains a set of packages I personally prefer to have on my machine. This can be updated over time and may not fit your expectations. However, the script is quite versatile and, with minor adjustments, can be used on any machine. To achieve this, consider forking this repository and making changed inside your fork. You can refer to [file structure](#file-sctructure) if needed.
+
+## Roadmap
+
+- [x] Packages
+- [x] oh my zsh
+- [x] Node & nvm
+- [x] Fonts
+- [ ] Docker in rootless mode
+- [ ] Private keys
