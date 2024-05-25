@@ -1,3 +1,4 @@
+---
 - name: Update apk cache
   community.general.apk:
     update_cache: true

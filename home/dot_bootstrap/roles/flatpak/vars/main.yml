@@ -1,3 +1,4 @@
+---
 flatpak_package_list:
   - com.bitwarden.desktop
   - com.getpostman.Postman

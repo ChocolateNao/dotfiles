@@ -1,3 +1,4 @@
+---
 - name: Add Flathub repo
   ansible.builtin.command: flatpak remote-add --system --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
   register: flathub_installation
