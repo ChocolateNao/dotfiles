@@ -3,6 +3,7 @@
   ansible.builtin.user:
     name: "{{ remote_regular_user }}"
     shell: /usr/bin/zsh
+  become: true
 
 - name: Ensure custom plugins directory
   ansible.builtin.file:
@@ -11,6 +12,18 @@
     owner: "{{ remote_regular_user }}"
     group: "{{ remote_regular_user }}"
     mode: "0755"
+  become: false
+
+- name: Download ohmyzsh installation script
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+    dest: /tmp/install_ohmyzsh.sh
+
+- name: Run ohmyzsh installation script
+  become_user: "{{ remote_regular_user }}"
+  ansible.builtin.command: sh /tmp/install_ohmyzsh.sh --unattended --keep-zshrc --skip-chsh
+  register: ohmyzsh_result
+  failed_when: "'FAILED' in ohmyzsh_result.stderr"
 
 - name: Clone Zsh plugins
   ansible.builtin.git:
@@ -20,7 +33,7 @@
   with_items: "{{ ohmyzsh_plugins }}"
   become: false
 
-- name: Ensure .zshrc includes the plugins
+- name: Ensure .zshrc includes plugins
   ansible.builtin.lineinfile:
     path: /home/{{ remote_regular_user }}/.zshrc
     regexp: "^plugins=\\(.*\\)$"
@@ -51,5 +64,5 @@
   register: source_zshrc
   args:
     executable: /bin/zsh
-  become: false
+  become: true
   changed_when: source_zshrc.rc == 0
