@@ -1,0 +1,55 @@
+---
+- name: Change current shell to zsh
+  ansible.builtin.user:
+    name: "{{ remote_regular_user }}"
+    shell: /usr/bin/zsh
+
+- name: Ensure custom plugins directory
+  ansible.builtin.file:
+    path: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/plugins
+    state: directory
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user }}"
+    mode: "0755"
+
+- name: Clone Zsh plugins
+  ansible.builtin.git:
+    repo: "{{ item.repo }}"
+    dest: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/plugins/{{ item.name }}
+    version: master
+  with_items: "{{ ohmyzsh_plugins }}"
+  become: false
+
+- name: Ensure .zshrc includes the plugins
+  ansible.builtin.lineinfile:
+    path: /home/{{ remote_regular_user }}/.zshrc
+    regexp: "^plugins=\\(.*\\)$"
+    line: "plugins=({{ ohmyzsh_plugins | map(attribute='name') | join(' ') }})"
+    create: true
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user }}"
+    mode: "0644"
+  become: false
+
+- name: Install p10k theme
+  ansible.builtin.git:
+    repo: "https://github.com/romkatv/powerlevel10k.git"
+    dest: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/theme/powerlevel10k
+    version: master
+  become: false
+
+- name: Ensure .zshrc is owned by the user
+  ansible.builtin.file:
+    path: /home/{{ remote_regular_user }}/.zshrc
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user }}"
+    mode: "0644"
+    state: file
+
+- name: Source .zshrc
+  ansible.builtin.shell: source /home/{{ remote_regular_user }}/.zshrc
+  register: source_zshrc
+  args:
+    executable: /bin/zsh
+  become: false
+  changed_when: source_zshrc.rc == 0

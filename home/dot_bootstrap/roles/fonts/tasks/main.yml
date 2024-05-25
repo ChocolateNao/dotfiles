@@ -1,0 +1,62 @@
+---
+- name: Download font archives
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/tmp/{{ item.name }}.zip"
+    mode: '0644'
+  with_items: "{{ fonts_data }}"
+
+- name: Ensure temp font dirs exist
+  ansible.builtin.file:
+    path: "/tmp/{{ item.name }}"
+    state: directory
+    mode: '0755'
+  with_items: "{{ fonts_data }}"
+
+- name: Extract font archives
+  ansible.builtin.unarchive:
+    src: "/tmp/{{ item.name }}.zip"
+    dest: "/tmp/{{ item.name }}"
+    remote_src: true
+  with_items: "{{ fonts_data }}"
+
+- name: Copy Fira Code font to font directory
+  ansible.builtin.copy:
+    src: "/tmp/{{ item.name }}/ttf"
+    dest: "{{ fonts_dir + item.name }}"
+    mode: "0644"
+    remote_src: true
+  when: item.name == "Fira Code"
+  with_items: "{{ fonts_data }}"
+
+- name: Copy JetBrains Mono font to font directory
+  ansible.builtin.copy:
+    src: "/tmp/{{ item.name }}/JetBrainsMono-1.0.3/ttf"
+    dest: "{{ fonts_dir + item.name }}"
+    mode: "0644"
+    remote_src: true
+  when: item.name == "JetBrains Mono"
+  with_items: "{{ fonts_data }}"
+
+- name: Copy fonts to font directory
+  ansible.builtin.copy:
+    src: "/tmp/{{ item.name }}"
+    dest: "{{ fonts_dir }}"
+    mode: "0644"
+    remote_src: true
+  when:
+    - item.name != "Fira Code"
+    - item.name != "JetBrains Mono"
+  with_items: "{{ fonts_data }}"
+
+- name: Clean up tmp font files
+  ansible.builtin.file:
+    path: "/tmp/{{ item.name }}"
+    state: absent
+  with_items: "{{ fonts_data }}"
+
+- name: Clean up tmp archives
+  ansible.builtin.file:
+    path: "/tmp/{{ item.name }}.zip"
+    state: absent
+  with_items: "{{ fonts_data }}"

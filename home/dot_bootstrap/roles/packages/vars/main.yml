@@ -1,4 +1,6 @@
+---
 packages_list_base:
+  - unzip
   - git
   - neofetch
   - flatpak
