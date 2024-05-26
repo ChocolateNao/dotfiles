@@ -5,6 +5,20 @@
     shell: /usr/bin/zsh
   become: true
 
+- name: Ensure ohmyzsh is installed
+  ansible.builtin.shell: >
+    /bin/sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" ""
+    --unattended
+    --keep-zshrc
+    --skip-chsh
+  args:
+    executable: /bin/bash
+    creates: "/home/{{ remote_regular_user }}/.oh-my-zsh/oh-my-zsh.sh"
+  register: ohmyzsh_result
+  become_user: "{{ remote_regular_user }}"
+  become: true
+  failed_when: "'FAILED' in ohmyzsh_result.stderr"
+
 - name: Ensure custom plugins directory
   ansible.builtin.file:
     path: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/plugins
@@ -14,18 +28,7 @@
     mode: "0755"
   become: false
 
-- name: Download ohmyzsh installation script
-  ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    dest: /tmp/install_ohmyzsh.sh
-
-- name: Run ohmyzsh installation script
-  become_user: "{{ remote_regular_user }}"
-  ansible.builtin.command: sh /tmp/install_ohmyzsh.sh --unattended --keep-zshrc --skip-chsh
-  register: ohmyzsh_result
-  failed_when: "'FAILED' in ohmyzsh_result.stderr"
-
-- name: Clone Zsh plugins
+- name: Clone zsh plugins
   ansible.builtin.git:
     repo: "{{ item.repo }}"
     dest: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/plugins/{{ item.name }}
@@ -33,7 +36,7 @@
   with_items: "{{ ohmyzsh_plugins }}"
   become: false
 
-- name: Ensure .zshrc includes plugins
+- name: Ensure .zshrc includes the plugins
   ansible.builtin.lineinfile:
     path: /home/{{ remote_regular_user }}/.zshrc
     regexp: "^plugins=\\(.*\\)$"
@@ -47,7 +50,7 @@
 - name: Install p10k theme
   ansible.builtin.git:
     repo: "https://github.com/romkatv/powerlevel10k.git"
-    dest: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/theme/powerlevel10k
+    dest: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/themes/powerlevel10k
     version: master
   become: false
 
@@ -64,5 +67,5 @@
   register: source_zshrc
   args:
     executable: /bin/zsh
-  become: true
+  become: false
   changed_when: source_zshrc.rc == 0
