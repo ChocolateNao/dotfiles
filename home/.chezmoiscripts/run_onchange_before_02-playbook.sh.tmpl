@@ -7,7 +7,7 @@ PACKAGE_MANAGER="{{- template "pkg_manager" . -}}"
 install_pip_deps() {
     # To avoid "externally-managed-environment" error
     if [ $PACKAGE_MANAGER = "pacman" ]; then
-        sudo pacman -S python-toml --needed
+        sudo pacman -S python-toml --needed --noconfirm
         return 0
     fi
 

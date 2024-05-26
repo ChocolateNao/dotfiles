@@ -5,7 +5,7 @@ set -eo pipefail
 OS="$(uname -s)"
 
 # Packages to install (space-separated)
-package_list="ansible git ansible-lint"
+package_list="ansible git"
 
 source {{ joinPath .chezmoi.sourceDir "/helpers/logger.sh" | quote }}
 
