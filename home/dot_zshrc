@@ -167,12 +167,6 @@ if [ -t 0 ]; then
 	export PINENTRY_USER_DATA=USE_TTY=1
 fi
 
-export EDITOR="code"
-export TERMINAL="gnome-terminal"
-export BROWSER="firefox"
-export VIDEO="vlc"
-export COLORTERM="truecolor"
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -198,3 +192,15 @@ load-nvmrc() {
 }
 add-zsh-hook chpwd load-nvmrc
 load-nvmrc
+
+# Load Angular CLI autocompletion.
+if [ -f "./angular.json" ]; then
+    source <(ng completion script)
+fi
+
+export EDITOR="code"
+export TERMINAL="gnome-terminal"
+export BROWSER="firefox"
+export VIDEO="vlc"
+export COLORTERM="truecolor"
+
