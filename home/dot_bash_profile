@@ -25,3 +25,13 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+# include Rust's bins
+if [ -d "$HOME/.cargo/bin"] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# include Go bins
+if [ -d "$HOME/go/bin"] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
