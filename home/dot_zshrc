@@ -198,6 +198,16 @@ if [ -f "./angular.json" ]; then
     source <(ng completion script)
 fi
 
+# include Rust bins
+if [ -d "$HOME/.cargo/bin" ]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# include Go bins
+if [ -d "$HOME/go/bin" ]; then
+    export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 export EDITOR="code"
 export TERMINAL="gnome-terminal"
 export BROWSER="firefox"
