@@ -205,7 +205,7 @@ fi
 
 # include Go bins
 if [ -d "$HOME/go/bin" ]; then
-    export PATH="$HOME/.cargo/bin:$PATH"
+    export PATH="$HOME/go/bin:$PATH"
 fi
 
 export EDITOR="code"
